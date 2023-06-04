@@ -57,6 +57,7 @@ const TodoView = ({ setTodoId }) => {
             ),
           }}
           onChange={(e) => setSearchQuery(e.target.value)}
+          data-testid="search-input"
         />
 
         <TableContainer component={Paper}>

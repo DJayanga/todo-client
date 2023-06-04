@@ -84,6 +84,7 @@ const TodoForm = ({ todoId, setTodoId }) => {
           onChange={handleInputChange}
           required
           name="title"
+          data-testid="title-input"
         />
         <TextField
           label="Description"
@@ -96,6 +97,7 @@ const TodoForm = ({ todoId, setTodoId }) => {
           onChange={handleInputChange}
           required
           name="description"
+          data-testid="description-input"
         />
 
         <Button className={classes.submitButton} type="submit" fullWidth>
