@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Box,
   Button,
@@ -14,31 +14,55 @@ import {
   TextField,
 } from '@material-ui/core';
 import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import SearchOutlinedIcon from '@material-ui/icons/SearchOutlined';
-
+import { deleteTodo } from '../redux/reducers';
 import { useTodoViewStyles } from './styles';
 
 const TodoView = ({ setTodoId }) => {
   const classes = useTodoViewStyles();
   const navigate = useNavigate();
-  const todos = useSelector((state) => state.inputReducer.todoList);
+  const dispath = useDispatch();
+  const todos = useSelector((state) => state);
   const [searchQuery, setSearchQuery] = useState('');
+  const [filteredTodos, setFilteredTodos] = useState([]);
+
+  useEffect(() => {
+    if (todos) setFilteredTodos(todos);
+  }, []);
+
+  const handleSearch = () => {
+    if (searchQuery) {
+      const filterdList = todos.filter((todo) => {
+        return todo.data.title.toLowerCase().includes(searchQuery.toLowerCase());
+      });
+      setFilteredTodos(filterdList);
+    }
+  };
+
+  const handleReset = () => {
+    if (todos) {
+      setFilteredTodos(todos);
+      setSearchQuery('');
+    }
+  };
 
   const handleUpdate = (id) => () => {
     setTodoId(id);
     navigate('/');
   };
 
+  const handleDelete = (id) => () => {
+    if (!id) return;
+
+    // Delete Todo
+    dispath(deleteTodo({ id }));
+    setFilteredTodos(todos.filter((todo) => todo.id !== id));
+  };
+
   const handleAddTodo = () => {
     navigate('/');
   };
-
-  const filteredTodos = todos.filter((todo) => {
-    const titleMatch = todo.data.title.toLowerCase().includes(searchQuery.toLowerCase());
-    const descriptionMatch = todo.data.description.toLowerCase().includes(searchQuery.toLowerCase());
-    return titleMatch || descriptionMatch;
-  });
 
   return (
     <>
@@ -59,6 +83,14 @@ const TodoView = ({ setTodoId }) => {
           onChange={(e) => setSearchQuery(e.target.value)}
           data-testid="search-input"
         />
+        <Box className={classes.searchButtons}>
+          <Button className={classes.searchButton} onClick={handleSearch}>
+            Search
+          </Button>
+          <Button className={classes.resetButton} onClick={handleReset}>
+            Reset
+          </Button>
+        </Box>
 
         <TableContainer component={Paper}>
           <Table className={classes.table}>
@@ -80,6 +112,9 @@ const TodoView = ({ setTodoId }) => {
                     <TableCell className={classes.actionsCell}>
                       <Button className={classes.editButton} onClick={handleUpdate(todo.id)}>
                         Edit
+                      </Button>
+                      <Button className={classes.deleteButton} onClick={handleDelete(todo.id)}>
+                        Delete
                       </Button>
                     </TableCell>
                   </TableRow>

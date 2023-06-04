@@ -6,22 +6,25 @@ const addTodoReducer = createSlice({
   name: 'todos',
   initialState,
   reducers: {
+    // Add Todo
     addTodo: (state, action) => {
-      console.log(action.payload);
       state.push(action.payload);
       return state;
     },
+
+    // Update Todo
     updateTodo: (state, action) => {
-      console.log(action.payload);
       const index = state.findIndex((todo) => todo.id === action.payload.id);
       state[index] = action.payload;
       return state;
     },
+
+    // Delete Todo
     deleteTodo: (state, action) => {
-      return state.filter((todo) => todo.id !== action.payload);
+      return state.filter((todo) => todo.id !== action.payload.id);
     },
   },
 });
 
 export const { addTodo, updateTodo, deleteTodo } = addTodoReducer.actions;
-export default addTodoReducer.reducer;
+export const reducer = addTodoReducer.reducer;

@@ -2,14 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { TextField, Button, Container } from '@material-ui/core';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { addTodo, updateTodo } from '../actions';
-
 import { useTodoFormStyles } from './styles';
+import { addTodo, updateTodo } from '../redux/reducers';
 
 const TodoForm = ({ todoId, setTodoId }) => {
   const classes = useTodoFormStyles();
   const navigate = useNavigate();
-  const todos = useSelector((state) => state.inputReducer.todoList);
+  const todos = useSelector((state) => state);
   const dispath = useDispatch();
 
   const [todo, setTodo] = useState({
@@ -35,7 +34,6 @@ const TodoForm = ({ todoId, setTodoId }) => {
       [event.target.name]: event.target.value,
     });
   };
-
   const handleSubmit = (event) => {
     event.preventDefault();
 
@@ -53,7 +51,13 @@ const TodoForm = ({ todoId, setTodoId }) => {
         })
       );
     } else {
-      dispath(addTodo(todo));
+      // Add Todo
+      dispath(
+        addTodo({
+          id: new Date().getTime().toString(),
+          data: todo,
+        })
+      );
     }
 
     // Reset form fields
@@ -64,7 +68,7 @@ const TodoForm = ({ todoId, setTodoId }) => {
     setTodoId(null);
 
     // Navigate to TodoView
-    navigate('/todo-view');
+    handleViewTodoList();
   };
 
   const handleViewTodoList = () => {

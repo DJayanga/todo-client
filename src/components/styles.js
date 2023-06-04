@@ -4,8 +4,8 @@ export const useTodoViewStyles = makeStyles((theme) => ({
   container: {
     minWidth: '90vw',
     maxWidth: '90vw',
-    minHeight: '60vh',
-    maxHeight: '80vh',
+    minHeight: '70vh',
+    maxHeight: '90vh',
     padding: '2rem',
     display: 'flex',
     flexDirection: 'column',
@@ -34,19 +34,38 @@ export const useTodoViewStyles = makeStyles((theme) => ({
     width: '25%',
   },
   descriptionCell: {
-    width: '50%',
+    width: '45%',
   },
   actionsCell: {
-    width: '15%',
+    width: '20%',
+    display: 'flex',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    fontSize: '1rem',
+    textAlign: 'center',
   },
   editButton: {
     borderRadius: '0.1rem',
     color: 'Orange',
     fontWeight: 'bold',
     cursor: 'pointer',
+    minWidth: '5rem',
+    marginRight: '1rem',
 
     '&:hover': {
       backgroundColor: 'Orange',
+      color: '#fff',
+    },
+  },
+  deleteButton: {
+    borderRadius: '0.1rem',
+    color: 'red',
+    fontWeight: 'bold',
+    cursor: 'pointer',
+    minWidth: '5rem',
+
+    '&:hover': {
+      backgroundColor: 'red',
       color: '#fff',
     },
   },
@@ -68,10 +87,47 @@ export const useTodoViewStyles = makeStyles((theme) => ({
     },
   },
   searchBox: {
-    marginBottom: '2rem',
+    marginBottom: '1rem',
     minWidth: '20rem',
     textAlign: 'center',
     justifyContent: 'center',
+  },
+
+  searchButtons: {
+    display: 'flex',
+    justifyContent: 'center',
+    gap: '1rem',
+    alignItems: 'center',
+    marginBottom: '2rem',
+  },
+
+  searchButton: {
+    borderRadius: '0.5rem',
+    backgroundColor: 'green',
+    fontWeight: 'bold',
+    color: '#fff',
+    opacity: '0.7',
+    minWidth: '7rem',
+
+    '&:hover': {
+      backgroundColor: 'green',
+      color: '#fff',
+      opacity: '1',
+    },
+  },
+  resetButton: {
+    borderRadius: '0.5rem',
+    backgroundColor: 'red',
+    fontWeight: 'bold',
+    color: '#fff',
+    opacity: '0.7',
+    minWidth: '7rem',
+
+    '&:hover': {
+      backgroundColor: 'red',
+      color: '#fff',
+      opacity: '1',
+    },
   },
 }));
 

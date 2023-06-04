@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { MemoryRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import store from '../store';
+import store from '../redux/store';
 import TodoForm from '../components/TodoForm';
 
 describe('Testing TodoForm Component', () => {
